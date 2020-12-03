@@ -55,7 +55,7 @@ router.delete('/:id', validateUserId, async (req, res, next) => {
     console.log('id',id);
     
     const delUser = await Users.remove(id);
-    res.status(200).json({ message: `The user with id ${id} has been deleted`})
+    res.status(200).json({ message: `The user with id ${id} has been deleted`, delete:delUser})
   } catch (error) {
     next(error);
   }
@@ -74,7 +74,7 @@ router.put('/:id', validateUserId, async (req, res, next) => {
   }
 });
 
-router.use((err, req, res, next) => {
+router.use((err, req, res) => {
   res.status(500).json({
     message: 'something awful happened!!!!!!!!',
     error: err.message,
