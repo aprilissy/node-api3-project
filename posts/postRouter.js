@@ -1,9 +1,14 @@
 const express = require('express');
-
+const db = require('./postDb')
+const { logger } = require('../middleware/users-middleware')
 const router = express.Router();
 
+
+
 router.get('/', (req, res) => {
-  // do your magic!
+  res.status(200).json()
+  
+  //do your magic!
 });
 
 router.get('/:id', (req, res) => {
