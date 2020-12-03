@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors')
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const helmet = require('helmet');
 const path = require('path')
 
@@ -11,7 +11,7 @@ const { logger } = require('./middleware/users-middleware');
 const User = require('./users/userRouter')
 const server = express();
 
-server.use(morgan('dev'));
+//server.use(morgan('dev'));
 server.use(helmet());
 server.use(cors())
 server.use(express.json());
