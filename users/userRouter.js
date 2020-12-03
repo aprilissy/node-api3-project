@@ -14,9 +14,12 @@ router.post('/', validateUser, async (req, res, next) => {
   }
 });
 
-router.post('/:id/posts', validateUserId,  validatePost, async (req, res, next) => {
+router.post('/:id/posts', validateUserId, validatePost, async (req, res, next) => {
   try {
-    const newPost = await Posts.insert(req.body)
+    const { id } = req.params; 
+    const text = req.body;
+    const payload = {...text, user_id:id}    
+    const newPost = await Posts.insert(payload)
     res.status(201).json(newPost)
   } catch (error) {
     next(error)
@@ -42,16 +45,33 @@ router.get('/:id/posts', validateUserId, validatePost, async (req, res, next) =>
   const usersPosts = await Users.getUserPosts(id);
   res.status(200).json(usersPosts);
 } catch (error) {
-  next(error)
+  next(error);
 }
 });
 
-router.delete('/:id', validateUserId, (req, res) => {
-  // do your magic!
+router.delete('/:id', validateUserId, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    console.log('id',id);
+    
+    const delUser = await Users.remove(id);
+    res.status(200).json({ message: `The user with id ${id} has been deleted`})
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.put('/:id', validateUserId, (req, res) => {
-  // do your magic!
+router.put('/:id', validateUserId, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const changes = req.body;
+    console.log('body',req.body);
+    
+    const editUser = await Users.update(id, changes)
+    res.status(200).json(editUser)
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.use((err, req, res, next) => {
