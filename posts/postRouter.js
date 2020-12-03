@@ -1,6 +1,4 @@
 const express = require('express');
-const db = require('./postDb')
-const { logger } = require('../middleware/users-middleware')
 const router = express.Router();
 
 
